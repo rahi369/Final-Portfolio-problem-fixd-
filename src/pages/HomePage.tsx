@@ -57,7 +57,7 @@ export function HomePage() {
             <div className="lg:col-span-7 flex flex-col justify-center space-y-7 py-2">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2.5 text-xs tracking-wide text-[#2D6A6A] dark:text-[#6EC4A7] font-medium">
-                  <span>{profile.brandName || 'Vexora Studio'}</span>
+                  <span>{profile.brandName || 'WENDAXY'}</span>
                   <span aria-hidden="true" className="text-[#D8C7A8] dark:text-[#3A5448]">·</span>
                   <span>{profile.professionalTitle}</span>
                   {profile.founderOf && (
@@ -140,7 +140,7 @@ export function HomePage() {
                 </div>
                 <div className="pt-3 px-1.5 flex items-center justify-between text-[11px] text-[#5B6B63] dark:text-[#8E9F96]">
                   <span className="font-semibold text-[#1B4332] dark:text-[#F4F1EA]">
-                    {profile.brandName || 'Vexora Studio'}
+                    {profile.brandName || 'WENDAXY'}
                   </span>
                   <span>Owner: {profile.fullName}</span>
                 </div>
@@ -153,7 +153,7 @@ export function HomePage() {
             <div className="p-4 sm:p-5 space-y-1">
               <p className="text-[11px] text-[#5B6B63] dark:text-[#8E9F96]">Studio Brand</p>
               <p className="font-display text-lg font-semibold text-[#1B4332] dark:text-[#F4F1EA]">
-                {profile.brandName || 'Vexora Studio'}
+                {profile.brandName || 'WENDAXY'}
               </p>
             </div>
             <div className="p-4 sm:p-5 space-y-1">
@@ -616,7 +616,7 @@ export function HomePage() {
         <div className="rounded-2xl bg-[#163829] dark:bg-[#11221B] border border-[#1B4332] dark:border-[#1E2E26] text-[#FAF8F3] p-8 sm:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-[0_24px_50px_-24px_rgba(27,67,50,0.45)]">
           <div className="space-y-2.5 max-w-xl">
             <p className="text-xs tracking-wide text-[#D8C7A8]">
-              {profile.brandName || 'Vexora Studio'} · Available for Inquiries
+              {profile.brandName || 'WENDAXY'} · Available for Inquiries
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#FAF8F3]">
               Have a website or brand project in mind?

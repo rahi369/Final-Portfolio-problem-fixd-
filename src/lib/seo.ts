@@ -1,12 +1,24 @@
+let activeBrandName = 'WENDAXY';
+
+export function setActiveSeoBrandName(brandName?: string) {
+  const cleaned = brandName?.trim();
+  if (cleaned) {
+    activeBrandName = cleaned;
+  }
+}
+
 export function updatePageSeo(params: {
   title: string;
   description: string;
   imageUrl?: string;
   jsonLd?: Record<string, unknown>;
 }) {
-  const fullTitle = params.title.includes('RAHI')
-    ? params.title
-    : `${params.title} — RAHI | Md. Humaun Husen Rahi`;
+  const titleLower = params.title.toLowerCase();
+  const brandLower = activeBrandName.toLowerCase();
+  const fullTitle =
+    titleLower.includes(brandLower) || params.title.includes('—')
+      ? params.title
+      : `${params.title} — ${activeBrandName}`;
   document.title = fullTitle;
 
   const setMeta = (selector: string, content: string) => {
@@ -17,6 +29,7 @@ export function updatePageSeo(params: {
   };
 
   setMeta('meta[name="description"]', params.description);
+  setMeta('meta[property="og:site_name"]', activeBrandName);
   setMeta('meta[property="og:title"]', fullTitle);
   setMeta('meta[property="og:description"]', params.description);
   setMeta('meta[name="twitter:title"]', fullTitle);

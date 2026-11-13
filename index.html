@@ -3,62 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vexora Studio — Md. Humaun Husen Rahi | Web Developer &amp; Entrepreneur</title>
+    <title>WENDAXY — Official Portfolio</title>
     <meta
       name="description"
-      content="Official portfolio of Vexora Studio, owned by Md. Humaun Husen Rahi (Rahi) — Freelancer, Web Developer, and Founder of SAMIA'S CLOSET based in Rajnagar, Moulvibazar, Bangladesh."
+      content="Official WENDAXY portfolio — web development, UI/UX design gallery, projects, services, and interactive studio assistant."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Vexora Studio" />
-    <meta
-      property="og:title"
-      content="Vexora Studio — Md. Humaun Husen Rahi | Web Developer &amp; Entrepreneur"
-    />
+    <meta property="og:site_name" content="WENDAXY" />
+    <meta property="og:title" content="WENDAXY — Official Portfolio" />
     <meta
       property="og:description"
-      content="Building Digital Experiences That Grow Businesses. Explore Vexora Studio's UI/UX design gallery, web projects, skills, AI assistant, and services."
+      content="Official WENDAXY portfolio — web development, UI/UX design gallery, projects, services, and interactive studio assistant."
     />
-    <meta
-      property="og:image"
-      content="/assets/aistudio/file_0000000078d082119ff34435498d89ca_c2719d2b.png"
-    />
+    <meta property="og:image" content="" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Vexora Studio — Md. Humaun Husen Rahi | Web Developer &amp; Entrepreneur"
-    />
+    <meta name="twitter:title" content="WENDAXY — Official Portfolio" />
     <meta
       name="twitter:description"
-      content="Building Digital Experiences That Grow Businesses. Explore Vexora Studio's UI/UX design gallery, web projects, skills, AI assistant, and services."
+      content="Official WENDAXY portfolio — web development, UI/UX design gallery, projects, services, and interactive studio assistant."
     />
+    <script>
+      try {
+        if (localStorage.getItem('rahi_portfolio_theme_v1') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+    <style>
+      .wendaxy-boot {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        background: #faf8f3;
+        color: #1b4332;
+      }
+      html.dark .wendaxy-boot {
+        background: #0a120f;
+        color: #f4f1ea;
+      }
+      .wendaxy-boot-title {
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: clamp(1.85rem, 4vw, 2.25rem);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        margin: 0 0 6px;
+      }
+      .wendaxy-boot-sub {
+        font-size: 12px;
+        opacity: 0.7;
+        margin: 0 0 18px;
+      }
+      .wendaxy-boot-bar {
+        width: 144px;
+        height: 4px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(223, 213, 195, 0.8);
+      }
+      html.dark .wendaxy-boot-bar {
+        background: #1e2e26;
+      }
+      .wendaxy-boot-fill {
+        width: 50%;
+        height: 100%;
+        border-radius: 999px;
+        background: #1b4332;
+        animation: wendaxyPulse 1.3s ease-in-out infinite;
+      }
+      html.dark .wendaxy-boot-fill {
+        background: #52a58c;
+      }
+      @keyframes wendaxyPulse {
+        0%, 100% { opacity: 0.45; transform: translateX(0); }
+        50% { opacity: 1; transform: translateX(85%); }
+      }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Md. Humaun Husen Rahi",
-        "alternateName": "RAHI",
-        "jobTitle": "Freelancer, Web Developer & Entrepreneur",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "SAMIA'S CLOSET"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Rajnagar",
-          "addressRegion": "Moulvibazar",
-          "addressCountry": "Bangladesh"
-        }
-      }
-    </script>
   </head>
   <body class="bg-[#FAF8F3] text-[#18221D] dark:bg-[#0A120F] dark:text-[#F4F1EA] antialiased">
-    <div id="root"></div>
+    <div id="root">
+      <div class="wendaxy-boot" role="status" aria-label="Loading WENDAXY">
+        <p class="wendaxy-boot-title">WENDAXY</p>
+        <p class="wendaxy-boot-sub">Loading portfolio...</p>
+        <div class="wendaxy-boot-bar">
+          <div class="wendaxy-boot-fill"></div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

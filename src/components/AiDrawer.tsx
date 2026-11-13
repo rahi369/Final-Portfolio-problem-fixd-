@@ -22,7 +22,7 @@ const STARTERS = [
 ];
 
 export function AiDrawer() {
-  const { route, navigate, mobileMenuOpen } = useApp();
+  const { route, navigate, mobileMenuOpen, profile } = useApp();
   const {
     activeThread,
     sendMessage,
@@ -113,7 +113,7 @@ export function AiDrawer() {
                   </h2>
                 </div>
                 <p className="text-[11px] text-[#5B6B63] dark:text-[#8E9F96]">
-                  Vexora Studio · Bangla, Banglish &amp; English
+                  {profile.brandName || 'WENDAXY'} · Bangla, Banglish &amp; English
                 </p>
               </div>
               <div className="flex items-center gap-1.5">

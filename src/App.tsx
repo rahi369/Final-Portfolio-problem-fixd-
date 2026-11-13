@@ -20,6 +20,7 @@ import { ServicesPage } from './pages/ServicesPage';
 import { AssistantPage } from './pages/AssistantPage';
 import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
+import { BrandLoadingScreen } from './components/BrandLoadingScreen';
 import { updatePageSeo } from './lib/seo';
 import { PRIVATE_ADMIN_ENTRY } from './lib/firebase';
 
@@ -67,14 +68,15 @@ function ToastRegion() {
 }
 
 function NotFoundPage() {
-  const { navigate } = useApp();
+  const { navigate, profile } = useApp();
 
   useEffect(() => {
+    const brand = profile.brandName || 'WENDAXY';
     updatePageSeo({
-      title: 'Page Not Found — RAHI',
-      description: 'The requested page could not be found on the RAHI portfolio.',
+      title: `Page Not Found — ${brand}`,
+      description: `The requested page could not be found on ${brand}.`,
     });
-  }, []);
+  }, [profile.brandName]);
 
   return (
     <main className="max-w-[760px] mx-auto px-6 py-24 text-center space-y-6">
@@ -108,7 +110,14 @@ function NotFoundPage() {
 }
 
 function AppShell() {
-  const { route, navigate, isAdmin, authReady, mobileMenuOpen } = useApp();
+  const {
+    route,
+    navigate,
+    isAdmin,
+    authReady,
+    loadingContent,
+    mobileMenuOpen,
+  } = useApp();
   const normalizedRoute = route.replace(/\/+$/, '') || '/';
 
   // Private owner keyboard shortcut: Alt + Shift + R
@@ -122,6 +131,10 @@ function AppShell() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [navigate, isAdmin]);
+
+  if (loadingContent) {
+    return <BrandLoadingScreen />;
+  }
 
   const renderPage = () => {
     if (normalizedRoute === '/') return <HomePage />;
@@ -143,11 +156,7 @@ function AppShell() {
     // unauthenticated visitors probing /admin or /admin/login receive 404 Not Found.
     if (normalizedRoute === '/admin' || normalizedRoute.startsWith('/admin/')) {
       if (!authReady) {
-        return (
-          <main className="max-w-[1200px] mx-auto px-6 py-16">
-            <div className="h-48 rounded-xl bg-[#F2EFE7] dark:bg-[#141F1A] animate-pulse" />
-          </main>
-        );
+        return <BrandLoadingScreen />;
       }
       return isAdmin ? <AdminPage /> : <NotFoundPage />;
     }

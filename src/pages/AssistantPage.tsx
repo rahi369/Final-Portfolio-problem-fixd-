@@ -96,10 +96,10 @@ export function AssistantPage() {
   const threadEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const brand = profile.brandName || 'WENDAXY';
     updatePageSeo({
-      title: `Rahi's Official AI Assistant — ${profile.brandName || 'Vexora Studio'}`,
-      description:
-        "Rahi's Official AI Assistant on Vexora Studio — fast answers about Rahi, coding, technology, education, and project scoping in Bangla, Banglish, and English.",
+      title: `Rahi's Official AI Assistant — ${brand}`,
+      description: `Rahi's Official AI Assistant on ${brand} — fast answers about Rahi, coding, technology, education, and project scoping in Bangla, Banglish, and English.`,
     });
   }, [profile.brandName]);
 
@@ -133,7 +133,7 @@ export function AssistantPage() {
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#DFD5C3] dark:border-[#1E2E26] pb-7">
         <div className="space-y-2.5 max-w-2xl">
           <p className="text-xs font-medium tracking-wide text-[#2D6A6A] dark:text-[#6EC4A7]">
-            Vexora Studio · Interactive Concierge
+            {profile.brandName || 'WENDAXY'} · Interactive Concierge
           </p>
           <h1 className="font-display text-4xl sm:text-5xl font-semibold text-[#1B4332] dark:text-[#F4F1EA]">
             Rahi&apos;s Official AI Assistant

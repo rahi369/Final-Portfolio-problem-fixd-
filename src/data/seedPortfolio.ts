@@ -14,13 +14,13 @@ export const REAL_PROFILE_PHOTO =
 
 export const DEFAULT_PROFILE: SiteProfile = {
   fullName: 'Md. Humaun Husen Rahi',
-  brandName: 'Vexora Studio',
+  brandName: 'WENDAXY',
   professionalTitle: 'Freelancer | Web Developer | Entrepreneur',
   founderOf: "SAMIA'S CLOSET",
   location: 'Rajnagar, Moulvibazar, Bangladesh',
   tagline: 'Building Digital Experiences That Grow Businesses.',
   shortIntro:
-    "I am Md. Humaun Husen Rahi, owner of Vexora Studio and founder of SAMIA'S CLOSET based in Rajnagar, Moulvibazar, Bangladesh. I design and build modern, responsive websites, AI-powered interfaces, and digital storefronts that help brands grow online.",
+    "I am Md. Humaun Husen Rahi, owner of WENDAXY and founder of SAMIA'S CLOSET based in Rajnagar, Moulvibazar, Bangladesh. I design and build modern, responsive websites, AI-powered interfaces, and digital storefronts that help brands grow online.",
   profilePhotoUrl: REAL_PROFILE_PHOTO,
 };
 
@@ -54,13 +54,13 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   dribbbleUrl: '',
   pinterestUrl: '',
   telegramUrl: '',
-  copyrightNotice: '© 2026 Vexora Studio · Owner: Md. Humaun Husen Rahi. All rights reserved.',
+  copyrightNotice: '© 2026 WENDAXY · Owner: Md. Humaun Husen Rahi. All rights reserved.',
   cvUrl: '',
   cvFileName: '',
   cvPublic: false,
-  seoTitle: 'Vexora Studio — Md. Humaun Husen Rahi | Web Developer & Entrepreneur',
+  seoTitle: 'WENDAXY — Md. Humaun Husen Rahi | Web Developer & Entrepreneur',
   seoDescription:
-    "Official portfolio of Vexora Studio, owned by Md. Humaun Husen Rahi (Rahi) — Freelancer, Web Developer & Founder of SAMIA'S CLOSET.",
+    "Official portfolio of WENDAXY, owned by Md. Humaun Husen Rahi (Rahi) — Freelancer, Web Developer & Founder of SAMIA'S CLOSET.",
   seoShareImageUrl: REAL_PROFILE_PHOTO,
   cloudinaryCloudName: 'f1gc3fzr',
   cloudinaryUploadPreset: 'Portfolio Website RAHI',

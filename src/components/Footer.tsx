@@ -33,7 +33,7 @@ export function Footer() {
             onClick={() => navigate('/')}
             className="font-display text-3xl font-semibold tracking-tight text-[#1B4332] dark:text-[#F4F1EA] cursor-pointer text-left"
           >
-            {profile.brandName || 'Vexora Studio'}
+            {profile.brandName || 'WENDAXY'}
           </button>
           <p className="text-xs font-medium text-[#18221D] dark:text-[#E5ECE8]">
             Owner: {profile.fullName}
@@ -162,7 +162,7 @@ export function Footer() {
           <span onClick={handleSecretTap} className="select-none">
             {settings.copyrightNotice}
           </span>
-          <span>{profile.brandName || 'Vexora Studio'} · Owner: {profile.fullName}</span>
+          <span>{profile.brandName || 'WENDAXY'} · Owner: {profile.fullName}</span>
         </div>
       </div>
     </footer>

@@ -284,8 +284,9 @@ ${urls}
     app.use(vite.middlewares);
   } else {
     const distDir = path.resolve(__dirname, 'dist');
-    app.use(express.static(distDir, { maxAge: '7d' }));
+    app.use(express.static(distDir, { maxAge: '7d', index: false }));
     app.get('*', (_req, res) => {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.join(distDir, 'index.html'));
     });
   }

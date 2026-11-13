@@ -32,6 +32,7 @@ import {
   handleFirestoreError,
   testFirestoreConnection,
 } from '../lib/firebase';
+import { setActiveSeoBrandName } from '../lib/seo';
 import {
   DEFAULT_ABOUT,
   DEFAULT_EXPERIENCE,
@@ -191,30 +192,59 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return () => unsub();
   }, []);
 
-  // Subscribe to public portfolio collections
+  // Subscribe to public portfolio collections and wait for initial Firestore hydration
   useEffect(() => {
+    let active = true;
+    const readyKeys = new Set<string>();
+    const REQUIRED_KEYS = 9;
+
+    const safetyTimer = window.setTimeout(() => {
+      if (active) setLoadingContent(false);
+    }, 6000);
+
+    const markReady = (key: string) => {
+      if (!active) return;
+      readyKeys.add(key);
+      if (readyKeys.size >= REQUIRED_KEYS) {
+        window.clearTimeout(safetyTimer);
+        setLoadingContent(false);
+      }
+    };
+
     const unsubProfile = onSnapshot(
       doc(db, 'site_profile', 'main'),
       (snap) => {
         setFsProfile(snap.exists() ? (snap.data() as SiteProfile) : null);
+        markReady('profile');
       },
-      () => setFsProfile(null)
+      () => {
+        setFsProfile(null);
+        markReady('profile');
+      }
     );
 
     const unsubAbout = onSnapshot(
       doc(db, 'site_about', 'main'),
       (snap) => {
         setFsAbout(snap.exists() ? (snap.data() as SiteAbout) : null);
+        markReady('about');
       },
-      () => setFsAbout(null)
+      () => {
+        setFsAbout(null);
+        markReady('about');
+      }
     );
 
     const unsubSettings = onSnapshot(
       doc(db, 'site_settings', 'main'),
       (snap) => {
         setFsSettings(snap.exists() ? (snap.data() as SiteSettings) : null);
+        markReady('settings');
       },
-      () => setFsSettings(null)
+      () => {
+        setFsSettings(null);
+        markReady('settings');
+      }
     );
 
     const galleryQ = isAdmin
@@ -226,11 +256,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setFsGallery(
           snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<DesignItem, 'id'>) }))
         );
-        setLoadingContent(false);
+        markReady('gallery');
       },
       () => {
         setFsGallery([]);
-        setLoadingContent(false);
+        markReady('gallery');
       }
     );
 
@@ -243,8 +273,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setFsProjects(
           snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<ProjectItem, 'id'>) }))
         );
+        markReady('projects');
       },
-      () => setFsProjects([])
+      () => {
+        setFsProjects([]);
+        markReady('projects');
+      }
     );
 
     const unsubSkills = onSnapshot(
@@ -253,8 +287,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setFsSkills(
           snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<SkillItem, 'id'>) }))
         );
+        markReady('skills');
       },
-      () => setFsSkills([])
+      () => {
+        setFsSkills([]);
+        markReady('skills');
+      }
     );
 
     const unsubExp = onSnapshot(
@@ -266,8 +304,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             ...(d.data() as Omit<ExperienceItem, 'id'>),
           }))
         );
+        markReady('experience');
       },
-      () => setFsExperience([])
+      () => {
+        setFsExperience([]);
+        markReady('experience');
+      }
     );
 
     const achQ = isAdmin
@@ -282,8 +324,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             ...(d.data() as Omit<AchievementItem, 'id'>),
           }))
         );
+        markReady('achievements');
       },
-      () => setFsAchievements([])
+      () => {
+        setFsAchievements([]);
+        markReady('achievements');
+      }
     );
 
     const servicesQ = isAdmin
@@ -295,11 +341,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setFsServices(
           snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<ServiceItem, 'id'>) }))
         );
+        markReady('services');
       },
-      () => setFsServices([])
+      () => {
+        setFsServices([]);
+        markReady('services');
+      }
     );
 
     return () => {
+      active = false;
+      window.clearTimeout(safetyTimer);
       unsubProfile();
       unsubAbout();
       unsubSettings();
@@ -464,26 +516,50 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const profile = fsProfile || DEFAULT_PROFILE;
   const about = fsAbout || DEFAULT_ABOUT;
   const settings = fsSettings || DEFAULT_SETTINGS;
+  const hasSeededFirestore = Boolean(fsProfile || fsSettings);
   const gallery = fsGallery;
+
+  useEffect(() => {
+    setActiveSeoBrandName(profile.brandName || 'WENDAXY');
+  }, [profile.brandName]);
+
   const projects = useMemo(
-    () => (fsProjects && fsProjects.length > 0 ? fsProjects : DEFAULT_PROJECTS),
-    [fsProjects]
+    () =>
+      fsProjects && fsProjects.length > 0
+        ? fsProjects
+        : hasSeededFirestore
+          ? []
+          : DEFAULT_PROJECTS,
+    [fsProjects, hasSeededFirestore]
   );
   const skills = useMemo(
-    () => (fsSkills && fsSkills.length > 0 ? fsSkills : DEFAULT_SKILLS),
-    [fsSkills]
+    () =>
+      fsSkills && fsSkills.length > 0
+        ? fsSkills
+        : hasSeededFirestore
+          ? []
+          : DEFAULT_SKILLS,
+    [fsSkills, hasSeededFirestore]
   );
   const experience = useMemo(
-    () => (fsExperience && fsExperience.length > 0 ? fsExperience : DEFAULT_EXPERIENCE),
-    [fsExperience]
+    () =>
+      fsExperience && fsExperience.length > 0
+        ? fsExperience
+        : hasSeededFirestore
+          ? []
+          : DEFAULT_EXPERIENCE,
+    [fsExperience, hasSeededFirestore]
   );
   const achievements = fsAchievements;
   const services = useMemo(
-    () => (fsServices && fsServices.length > 0 ? fsServices : DEFAULT_SERVICES),
-    [fsServices]
+    () =>
+      fsServices && fsServices.length > 0
+        ? fsServices
+        : hasSeededFirestore
+          ? []
+          : DEFAULT_SERVICES,
+    [fsServices, hasSeededFirestore]
   );
-
-  const hasSeededFirestore = Boolean(fsProfile && fsSettings);
 
   const getWhatsappUrl = useCallback(
     (message?: string) => {

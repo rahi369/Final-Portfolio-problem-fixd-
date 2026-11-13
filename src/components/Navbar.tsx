@@ -170,7 +170,7 @@ export function Navbar() {
             onClick={() => handleNav('/')}
             className="font-display text-[21px] sm:text-[24px] font-semibold tracking-[0.02em] text-[#1B4332] dark:text-[#F4F1EA] hover:opacity-85 transition-opacity whitespace-nowrap shrink-0 cursor-pointer"
           >
-            {profile.brandName || 'Vexora Studio'}
+            {profile.brandName || 'WENDAXY'}
           </button>
 
           {/* Zone 2: 5 concise single-line nav links */}
@@ -232,7 +232,7 @@ export function Navbar() {
           <div className="px-6 h-16 border-b border-[#DFD5C3] dark:border-[#24352C] flex items-center justify-between shrink-0 bg-[#F2EFE7]/60 dark:bg-[#121D18]/75">
             <div className="flex items-baseline gap-2.5">
               <span className="font-display text-[22px] font-semibold tracking-[0.02em] text-[#1B4332] dark:text-[#F4F1EA]">
-                {profile.brandName || 'Vexora Studio'}
+                {profile.brandName || 'WENDAXY'}
               </span>
               <span className="text-[11px] text-[#5B6B63] dark:text-[#8E9F96]">
                 Menu
