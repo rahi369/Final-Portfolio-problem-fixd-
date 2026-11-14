@@ -30,6 +30,7 @@ export function AboutPage() {
             <div className="rounded-xl overflow-hidden bg-[#E9E4D8] dark:bg-[#192620] aspect-[4/5]">
               {profile.profilePhotoUrl ? (
                 <img
+                  key={profile.profilePhotoUrl}
                   src={profile.profilePhotoUrl}
                   alt={profile.fullName}
                   loading="eager"

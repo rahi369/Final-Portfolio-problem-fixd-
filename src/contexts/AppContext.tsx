@@ -91,8 +91,36 @@ interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | null>(null);
 const THEME_STORAGE_KEY = 'rahi_portfolio_theme_v1';
+const SNAPSHOT_STORAGE_KEY = 'wendaxy_live_snapshot_v1';
+
+interface CachedSnapshot {
+  profile?: SiteProfile;
+  about?: SiteAbout;
+  settings?: SiteSettings;
+}
+
+function readCachedSnapshot(): CachedSnapshot {
+  try {
+    const raw = localStorage.getItem(SNAPSHOT_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as CachedSnapshot;
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeCachedSnapshot(patch: CachedSnapshot) {
+  try {
+    const prev = readCachedSnapshot();
+    localStorage.setItem(SNAPSHOT_STORAGE_KEY, JSON.stringify({ ...prev, ...patch }));
+  } catch {
+    // Ignore storage quota errors
+  }
+}
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const [cachedInitial] = useState<CachedSnapshot>(() => readCachedSnapshot());
   const [route, setRoute] = useState<string>(() => window.location.pathname || '/');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<ThemeMode>(() => {
@@ -104,9 +132,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [authReady, setAuthReady] = useState(false);
 
-  const [fsProfile, setFsProfile] = useState<SiteProfile | null>(null);
-  const [fsAbout, setFsAbout] = useState<SiteAbout | null>(null);
-  const [fsSettings, setFsSettings] = useState<SiteSettings | null>(null);
+  const [fsProfile, setFsProfile] = useState<SiteProfile | null>(
+    () => cachedInitial.profile || null
+  );
+  const [fsAbout, setFsAbout] = useState<SiteAbout | null>(
+    () => cachedInitial.about || null
+  );
+  const [fsSettings, setFsSettings] = useState<SiteSettings | null>(
+    () => cachedInitial.settings || null
+  );
   const [fsGallery, setFsGallery] = useState<DesignItem[]>([]);
   const [fsProjects, setFsProjects] = useState<ProjectItem[] | null>(null);
   const [fsSkills, setFsSkills] = useState<SkillItem[] | null>(null);
@@ -200,7 +234,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     const safetyTimer = window.setTimeout(() => {
       if (active) setLoadingContent(false);
-    }, 6000);
+    }, 12000);
 
     const markReady = (key: string) => {
       if (!active) return;
@@ -214,11 +248,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const unsubProfile = onSnapshot(
       doc(db, 'site_profile', 'main'),
       (snap) => {
-        setFsProfile(snap.exists() ? (snap.data() as SiteProfile) : null);
+        if (snap.exists()) {
+          const data = snap.data() as SiteProfile;
+          setFsProfile(data);
+          writeCachedSnapshot({ profile: data });
+        } else {
+          setFsProfile(null);
+        }
         markReady('profile');
       },
       () => {
-        setFsProfile(null);
         markReady('profile');
       }
     );
@@ -226,11 +265,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const unsubAbout = onSnapshot(
       doc(db, 'site_about', 'main'),
       (snap) => {
-        setFsAbout(snap.exists() ? (snap.data() as SiteAbout) : null);
+        if (snap.exists()) {
+          const data = snap.data() as SiteAbout;
+          setFsAbout(data);
+          writeCachedSnapshot({ about: data });
+        } else {
+          setFsAbout(null);
+        }
         markReady('about');
       },
       () => {
-        setFsAbout(null);
         markReady('about');
       }
     );
@@ -238,11 +282,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const unsubSettings = onSnapshot(
       doc(db, 'site_settings', 'main'),
       (snap) => {
-        setFsSettings(snap.exists() ? (snap.data() as SiteSettings) : null);
+        if (snap.exists()) {
+          const data = snap.data() as SiteSettings;
+          setFsSettings(data);
+          writeCachedSnapshot({ settings: data });
+        } else {
+          setFsSettings(null);
+        }
         markReady('settings');
       },
       () => {
-        setFsSettings(null);
         markReady('settings');
       }
     );

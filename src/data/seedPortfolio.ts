@@ -8,9 +8,7 @@ import {
   SkillItem,
 } from '../types';
 
-// Real portrait uploaded by Md. Humaun Husen Rahi
-export const REAL_PROFILE_PHOTO =
-  '/assets/aistudio/file_0000000078d082119ff34435498d89ca_c2719d2b.png';
+export const REAL_PROFILE_PHOTO = '';
 
 export const DEFAULT_PROFILE: SiteProfile = {
   fullName: 'Md. Humaun Husen Rahi',
@@ -21,7 +19,7 @@ export const DEFAULT_PROFILE: SiteProfile = {
   tagline: 'Building Digital Experiences That Grow Businesses.',
   shortIntro:
     "I am Md. Humaun Husen Rahi, owner of WENDAXY and founder of SAMIA'S CLOSET based in Rajnagar, Moulvibazar, Bangladesh. I design and build modern, responsive websites, AI-powered interfaces, and digital storefronts that help brands grow online.",
-  profilePhotoUrl: REAL_PROFILE_PHOTO,
+  profilePhotoUrl: '',
 };
 
 export const DEFAULT_ABOUT: SiteAbout = {
@@ -61,7 +59,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   seoTitle: 'WENDAXY — Md. Humaun Husen Rahi | Web Developer & Entrepreneur',
   seoDescription:
     "Official portfolio of WENDAXY, owned by Md. Humaun Husen Rahi (Rahi) — Freelancer, Web Developer & Founder of SAMIA'S CLOSET.",
-  seoShareImageUrl: REAL_PROFILE_PHOTO,
+  seoShareImageUrl: '',
   cloudinaryCloudName: 'f1gc3fzr',
   cloudinaryUploadPreset: 'Portfolio Website RAHI',
 };

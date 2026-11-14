@@ -6,7 +6,7 @@ export default function handler(_req: IncomingMessage, res: ServerResponse) {
   res.end(
     JSON.stringify({
       ok: true,
-      service: 'vexora-studio-portfolio',
+      service: 'wendaxy-portfolio',
       timestamp: new Date().toISOString(),
     })
   );
